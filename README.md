@@ -1,2 +1,2 @@
 # gaga-api
- 快速api开发
+ api接口自动生成器，快速api开发

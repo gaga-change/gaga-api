@@ -1,0 +1,34 @@
+{
+  "name": "gaga-api",
+  "version": "1.0.0",
+  "description": "api接口自动生成器，快速api开发",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaga-change/gaga-api.git"
+  },
+  "author": "严俊东",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.12.3",
+    "mongoose": "^5.8.7"
+  },
+  "files": [
+    "controller",
+    "middleware",
+    "model",
+    "router",
+    "index.js"
+  ],
+  "bugs": {
+    "url": "https://github.com/gaga-change/gaga-api/issues"
+  },
+  "homepage": "https://github.com/gaga-change/gaga-api#readme"
+}
