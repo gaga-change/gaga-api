@@ -1,4 +1,18 @@
-module.exports = (config, appendRouter) => {
+const pluginDefault = {
+  logger: {
+    enable: true,
+  }
+}
+const connectConfig = (def, target) => {
+  Object.keys(def).forEach(key => {
+    if (!target[key]) {
+      target[key] = def[key]
+    } else {
+      Object.assign(def[key], Object.assign(def[key], target[key]))
+    }
+  })
+}
+module.exports = (config, appendRouter, options = {}) => {
   const Koa = require('koa')
   const Router = require('koa-router')
   const mongoose = require('mongoose')
@@ -9,6 +23,7 @@ module.exports = (config, appendRouter) => {
   const User = require('./model/User')
   const authRouter = require('./router/auth')
   const { plugin, user, model, project } = config
+  connectConfig(pluginDefault, plugin)
   const app = new Koa()
   mongoose.set('useCreateIndex', true)
   mongoose.connect(plugin.mongodb.link, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,7 +40,9 @@ module.exports = (config, appendRouter) => {
   app.keys = ['junn secret 4']
   app.use(koaBody({ jsonLimit: '10kb' }))
   app.use(session(CONFIG, app))
-  app.use(logger())
+  if (plugin.logger.enable) {
+    app.use(logger())
+  }
   app.use(authRouter(config))
   const { router: autoRouter, modelsMap } = mainRouter(config)
   app.use(autoRouter.routes())
@@ -33,6 +50,9 @@ module.exports = (config, appendRouter) => {
     let router = new Router()
     appendRouter(router, { User, ...modelsMap })
     app.use(router.routes())
+  }
+  if (options.getKoaApp) {
+    return app
   }
   app.use(async (ctx) => {
     ctx.status = 404
