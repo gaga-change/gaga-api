@@ -1,6 +1,6 @@
 {
   "name": "gaga-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "api接口自动生成器，快速api开发",
   "main": "index.js",
   "scripts": {
