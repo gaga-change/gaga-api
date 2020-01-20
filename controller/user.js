@@ -1,6 +1,5 @@
 
-module.exports = (config) => {
-  const User = require('../model/User')(config)
+module.exports = (config, User) => {
 
   return {
     /**

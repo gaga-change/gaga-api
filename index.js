@@ -20,7 +20,6 @@ module.exports = (config, appendRouter, options = {}) => {
   const koaBody = require('koa-body')
   const session = require('koa-session')
   const mainRouter = require('./router')
-  const User = require('./model/User')
   const authRouter = require('./router/auth')
   const { plugin, user, model, project } = config
   connectConfig(pluginDefault, plugin)
@@ -43,7 +42,8 @@ module.exports = (config, appendRouter, options = {}) => {
   if (plugin.logger.enable) {
     app.use(logger())
   }
-  app.use(authRouter(config))
+  const { router: userRouter, User } = authRouter(config)
+  app.use(userRouter.routes())
   const { router: autoRouter, modelsMap } = mainRouter(config)
   app.use(autoRouter.routes())
   if (appendRouter) {

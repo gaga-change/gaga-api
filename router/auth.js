@@ -3,7 +3,8 @@ const checkAdmin = require('../middleware/checkAdmin')
 const checkAuth = require('../middleware/checkAuth')
 
 module.exports = ({ plugin, user, model, project }) => {
-  const userController = require('../controller/user')({user})
+  const User = require('../model/User')({user})
+  const userController = require('../controller/user')({user}, User)
   const { prefix = '' } = project
   router = new Router({prefix})
   router.post(`/auth/register`, userController.register)
@@ -24,5 +25,9 @@ module.exports = ({ plugin, user, model, project }) => {
   router.post(`/auth/updateAccount`, checkAuth, userController.updateAccount)
   console.log(`post\t${prefix}/auth/updateAccount`)
 
-  return router.routes()
+  // return router.routes()
+  return {
+    router,
+    User
+  }
 }
