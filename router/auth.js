@@ -1,9 +1,9 @@
 const Router = require('koa-router')
-const userController = require('../controller/user')
 const checkAdmin = require('../middleware/checkAdmin')
 const checkAuth = require('../middleware/checkAuth')
 
 module.exports = ({ plugin, user, model, project }) => {
+  const userController = require('../controller/user')({user})
   const { prefix = '' } = project
   router = new Router({prefix})
   router.post(`/auth/register`, userController.register)
